@@ -1,0 +1,22 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 24px 0 8px;
+}
+
+.pagination-info {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.pagination-num {
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+.pagination-btn {
+  min-width: 90px;
+  justify-content: center;
+}

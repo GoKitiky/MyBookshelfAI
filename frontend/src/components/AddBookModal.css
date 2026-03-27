@@ -1,0 +1,74 @@
+.add-book-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgb(61 43 31 / 0.3);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 12vh;
+  z-index: 50;
+  overscroll-behavior: contain;
+}
+
+.add-book-modal {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 32px rgb(61 43 31 / 0.15);
+  width: 90%;
+  max-width: 440px;
+  padding: 20px 22px 22px;
+}
+
+.add-book-heading {
+  font-family: var(--font-display, var(--font-body));
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0 0 16px;
+  color: var(--color-text);
+}
+
+.add-book-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.add-book-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+.add-book-field input,
+.add-book-field select,
+.add-book-field textarea {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--color-bg, transparent);
+  color: var(--color-text);
+  outline: none;
+}
+
+.add-book-field textarea {
+  resize: vertical;
+  min-height: 88px;
+  line-height: 1.45;
+}
+
+.add-book-field input:focus,
+.add-book-field select:focus,
+.add-book-field textarea:focus {
+  border-color: var(--color-accent);
+}
+
+.add-book-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+}

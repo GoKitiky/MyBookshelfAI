@@ -1,0 +1,45 @@
+.indeterminate-progress {
+  width: 100%;
+  max-width: 28rem;
+  margin-inline: auto;
+}
+
+.indeterminate-progress__track {
+  height: 4px;
+  border-radius: var(--radius-sm);
+  background: var(--color-border-subtle);
+  overflow: hidden;
+}
+
+.indeterminate-progress__fill {
+  height: 100%;
+  width: 38%;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(
+    90deg,
+    var(--color-accent-subtle),
+    var(--color-accent),
+    var(--color-accent-subtle)
+  );
+  animation: indeterminate-progress-slide 1.15s cubic-bezier(0.25, 1, 0.5, 1)
+    infinite;
+}
+
+@keyframes indeterminate-progress-slide {
+  0% {
+    transform: translateX(-105%);
+  }
+
+  100% {
+    transform: translateX(280%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .indeterminate-progress__fill {
+    animation: none;
+    width: 100%;
+    transform: none;
+    opacity: 0.35;
+  }
+}
