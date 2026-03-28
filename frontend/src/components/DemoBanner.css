@@ -1,7 +1,8 @@
 .demo-banner {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 12px;
+  gap: 10px 12px;
   padding: 10px 20px;
   background: #fdf6e3;
   border-bottom: 1px solid var(--color-border);
@@ -17,6 +18,38 @@
 .demo-banner__link {
   font-weight: 500;
   white-space: nowrap;
+}
+
+.demo-banner__clear {
+  flex-shrink: 0;
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--color-text);
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid var(--color-border);
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    opacity 150ms ease;
+}
+
+.demo-banner__clear:disabled {
+  cursor: wait;
+  opacity: 0.8;
+}
+
+@media (hover: hover) {
+  .demo-banner__clear:hover:not(:disabled) {
+    background: var(--color-surface-hover);
+  }
+}
+
+.demo-banner__clear:focus-visible {
+  outline: 2px solid var(--color-accent, #2563eb);
+  outline-offset: 2px;
 }
 
 .demo-banner__dismiss {

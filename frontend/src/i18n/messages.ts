@@ -178,6 +178,14 @@ export type Messages = {
     showKey: string;
     hideKey: string;
   };
+  demoFab: {
+    label: string;
+    aria: string;
+    clearing: string;
+    confirm: string;
+    success: string;
+    failed: string;
+  };
 };
 
 const ru: Messages = {
@@ -371,6 +379,15 @@ const ru: Messages = {
     showKey: "Показать ключ",
     hideKey: "Скрыть ключ",
   },
+  demoFab: {
+    label: "Убрать демо-книги",
+    aria: "Удалить все демонстрационные книги из библиотеки",
+    clearing: "Удаление…",
+    confirm:
+      "Удалить все демо-книги из библиотеки? Пустая библиотека не заполнится демо снова автоматически.",
+    success: "Демо-книги удалены",
+    failed: "Не удалось удалить демо-книги",
+  },
 };
 
 const en: Messages = {
@@ -562,6 +579,15 @@ const en: Messages = {
     saveFailed: (msg) => `Save failed: ${msg}`,
     showKey: "Show key",
     hideKey: "Hide key",
+  },
+  demoFab: {
+    label: "Remove demo books",
+    aria: "Remove all demonstration books from the library",
+    clearing: "Removing…",
+    confirm:
+      "Remove all demo books from your library? An empty library will not be auto-filled with demo again.",
+    success: "Demo books removed",
+    failed: "Could not remove demo books",
   },
 };
 

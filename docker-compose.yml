@@ -1,6 +1,15 @@
 services:
   api:
     build: .
+    # Dev: live code from the repo + auto-reload (no image rebuild after editing Python).
+    command:
+      - uvicorn
+      - app.main:app
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8000"
+      - --reload
     ports:
       - "8000:8000"
     # Optional file: Docker Compose v2.24+; clone works without copying .env first.
@@ -10,6 +19,8 @@ services:
     volumes:
       # Named volume: DB is NOT ./data on the host. Use `docker compose down -v` to reset.
       - bookshelf_data:/app/data
+      - ./app:/app/app:ro
+      - ./config.py:/app/config.py:ro
 
   frontend:
     image: node:22-bookworm-slim

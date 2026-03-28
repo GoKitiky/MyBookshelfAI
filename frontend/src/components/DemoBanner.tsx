@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { clearDemoBooks, notifyLibraryUpdated } from "../api/books";
 import { fetchSettingsStatus } from "../api/settings";
 import { useI18n } from "../i18n/I18nContext";
+import { useToast } from "./Toast";
 import "./DemoBanner.css";
 
 const LS_KEY = "demo_banner_dismissed";
@@ -22,11 +24,14 @@ const bannerMessages = {
 } as const;
 
 export function DemoBanner() {
-  const { locale } = useI18n();
+  const { locale, m } = useI18n();
   const t = bannerMessages[locale];
+  const clearT = m.demoFab;
+  const { toast } = useToast();
 
   const [visible, setVisible] = useState(false);
   const [isDemo, setIsDemo] = useState(false);
+  const [clearingDemo, setClearingDemo] = useState(false);
 
   useEffect(() => {
     if (localStorage.getItem(LS_KEY) === "true") return;
@@ -50,11 +55,37 @@ export function DemoBanner() {
     setVisible(false);
   };
 
+  const handleClearDemo = async () => {
+    if (clearingDemo || !window.confirm(clearT.confirm)) return;
+    setClearingDemo(true);
+    try {
+      await clearDemoBooks(locale);
+      setIsDemo(false);
+      toast(clearT.success);
+      notifyLibraryUpdated();
+    } catch {
+      toast(clearT.failed);
+    } finally {
+      setClearingDemo(false);
+    }
+  };
+
   return (
     <div className="demo-banner" role="status">
       <span className="demo-banner__text">
         {isDemo ? t.demo : t.noKey}
       </span>
+      {isDemo ? (
+        <button
+          type="button"
+          className="demo-banner__clear"
+          onClick={() => void handleClearDemo()}
+          disabled={clearingDemo}
+          aria-label={clearT.aria}
+        >
+          {clearingDemo ? clearT.clearing : clearT.label}
+        </button>
+      ) : null}
       <Link to="/settings" className="demo-banner__link">
         {t.goToSettings}
       </Link>

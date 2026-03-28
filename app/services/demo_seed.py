@@ -6,8 +6,14 @@ import logging
 
 from app.locale import AppLocale
 from app.models import Book, EnrichedBook, ReaderProfile
-from app.services.cache import CacheNamespace, make_key, set_cache
-from app.services.library_db import get_all_books, upsert_book
+from app.services.cache import CacheNamespace, invalidate, make_key, set_cache
+from app.services.library_db import (
+    book_identity_id,
+    delete_book,
+    get_all_books,
+    reading_list_remove,
+    upsert_book,
+)
 from app.services.profile import ProfileBuilder
 from app.services.recommendation_scoring import apply_match_scores_to_recommendation_dicts
 from app.services.settings_db import get_setting, set_setting
@@ -508,6 +514,31 @@ def mark_library_emptied_by_user() -> None:
     """Remember that the user cleared the library so demo content is not auto-restored."""
     set_setting(SETTING_DEMO_AUTO_SEED_SUPPRESSED, "true")
     set_setting(SETTING_DEMO_LIBRARY, "false")
+
+
+async def clear_demo_books(locale: AppLocale) -> dict[str, int]:
+    """Remove seeded demo titles for this locale, drop their cache rows, and update flags."""
+    if get_setting(SETTING_DEMO_LIBRARY) != "true":
+        raise ValueError("Library is not in demo mode")
+
+    demo_books, _, _, _ = _DEMO_BY_LOCALE[locale]
+    removed = 0
+    for raw in demo_books:
+        title = str(raw["title"])
+        author = str(raw["author"])
+        book_id = book_identity_id(title, author)
+        reading_list_remove("planned", book_id)
+        reading_list_remove("blacklist", book_id)
+        if delete_book(book_id):
+            removed += 1
+        await invalidate(CacheNamespace.ENRICHED_BOOKS, make_key(locale, title, author))
+
+    if not get_all_books():
+        mark_library_emptied_by_user()
+    else:
+        set_setting(SETTING_DEMO_LIBRARY, "false")
+
+    return {"removed": removed}
 
 
 async def ensure_demo_library_seeded(locale: AppLocale) -> None:
