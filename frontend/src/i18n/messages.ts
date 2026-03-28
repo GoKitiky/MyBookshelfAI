@@ -107,8 +107,9 @@ export type Messages = {
     load: string;
     wait: string;
     refresh: string;
-    blockedEmpty: string;
-    syncLibrary: string;
+    emptyLibraryTitle: string;
+    emptyLibraryHint: string;
+    emptyLibraryCta: string;
     blockedMoreBooks: string;
     openLibrary: string;
     blockedEnrich: string;
@@ -281,8 +282,10 @@ const ru: Messages = {
     load: "Загрузить",
     wait: "Подождите…",
     refresh: "Обновить",
-    blockedEmpty: "Здесь пока пустая библиотека.",
-    syncLibrary: "Синхронизировать библиотеку",
+    emptyLibraryTitle: "В библиотеке пока нет книг",
+    emptyLibraryHint:
+      "Персональные рекомендации строятся по книгам из вашей библиотеки. Добавьте книги, затем снова откройте эту страницу.",
+    emptyLibraryCta: "Перейти в библиотеку",
     blockedMoreBooks:
       "Добавьте ещё одну книгу и снова синхронизируйте.",
     openLibrary: "Открыть библиотеку",
@@ -312,7 +315,8 @@ const ru: Messages = {
       "Договариваемся с музами и метаданными…",
     ],
     errorShort: {
-      need_sync: "Сначала синхронизируйте библиотеку.",
+      need_sync:
+        "В библиотеке пока нет книг. Добавьте книги, чтобы получить рекомендации.",
       need_books: "В библиотеке нужно как минимум две книги.",
       need_enrich: "Сначала выполните быстрый анализ библиотеки.",
       other: "Не удалось загрузить рекомендации.",
@@ -471,8 +475,10 @@ const en: Messages = {
     load: "Load",
     wait: "Working…",
     refresh: "Refresh",
-    blockedEmpty: "Your library is empty here.",
-    syncLibrary: "Sync library",
+    emptyLibraryTitle: "Your library has no books yet",
+    emptyLibraryHint:
+      "Personal recommendations are based on the books in your library. Add some books, then open this page again.",
+    emptyLibraryCta: "Go to library",
     blockedMoreBooks: "Add one more book, then sync again.",
     openLibrary: "Open library",
     blockedEnrich:
@@ -501,7 +507,8 @@ const en: Messages = {
       "Negotiating with muses and metadata…",
     ],
     errorShort: {
-      need_sync: "Sync your library first.",
+      need_sync:
+        "Your library has no books yet. Add books to get recommendations.",
       need_books: "You need at least two books in your library.",
       need_enrich: "Run a quick analysis on your library.",
       other: "Could not load recommendations.",

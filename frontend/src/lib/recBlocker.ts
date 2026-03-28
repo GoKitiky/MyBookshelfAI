@@ -11,6 +11,8 @@ export function recBlockerFromMessage(message: string): RecBlocker {
   if (
     m.includes("no library found") ||
     m.includes("library is empty") ||
+    m.includes("no books in library") ||
+    m.includes("import .md files first") ||
     m.includes("sync first")
   ) {
     return { kind: "need_sync" };
