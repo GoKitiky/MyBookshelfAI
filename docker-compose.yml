@@ -25,25 +25,27 @@ services:
   frontend:
     image: node:22-bookworm-slim
     working_dir: /app
+    # Root only for chmod; Vite runs as uid 1000 (image user "node"). node_modules is chmodded
+    # so any host UID can share the bind mount (avoids EACCES on .vite-temp for non-1000 users).
     ports:
       - "5173:5173"
     environment:
       API_PROXY_TARGET: http://api:8000
     volumes:
       - ./frontend:/app
-      - frontend_node_modules:/app/node_modules
     command:
       - sh
       - -c
       - |
         set -e
+        mkdir -p /app/node_modules
         if [ ! -x node_modules/.bin/vite ]; then
-          npm ci
+          setpriv --reuid=1000 --regid=1000 --init-groups -- sh -c 'umask 000; npm ci'
         fi
-        exec npm run dev -- --host 0.0.0.0
+        chmod -R a+rwX /app/node_modules
+        exec setpriv --reuid=1000 --regid=1000 --init-groups -- sh -c 'umask 000; exec npm run dev -- --host 0.0.0.0'
     depends_on:
       - api
 
 volumes:
   bookshelf_data:
-  frontend_node_modules:

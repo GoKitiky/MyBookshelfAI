@@ -3,8 +3,13 @@
 BACKEND_PORT ?= 8000
 FRONTEND_PORT ?= 5173
 PYTHON ?= python3
+FRONTEND_DIR := $(CURDIR)/frontend
 
 .PHONY: help dev website backend frontend stop
+
+# Install JS deps when missing or after package-lock.json changes.
+$(FRONTEND_DIR)/node_modules/.bin/vite: $(FRONTEND_DIR)/package-lock.json
+	cd "$(FRONTEND_DIR)" && npm ci
 
 help:
 	@echo "Targets:"
@@ -16,7 +21,7 @@ help:
 	@echo "Override Python: make PYTHON=.venv/bin/python dev"
 
 # Run both servers in one shell so INT/TERM kills all background jobs and frees ports.
-dev website:
+dev website: $(FRONTEND_DIR)/node_modules/.bin/vite
 	set -e; \
 	trap 'kill $$(jobs -p) 2>/dev/null || true; wait 2>/dev/null || true' INT TERM EXIT; \
 	cd "$(CURDIR)" && PYTHONPATH=. $(PYTHON) -m uvicorn app.main:app --reload --host 127.0.0.1 --port $(BACKEND_PORT) & \
@@ -28,8 +33,8 @@ dev website:
 backend:
 	cd "$(CURDIR)" && PYTHONPATH=. $(PYTHON) -m uvicorn app.main:app --reload --host 127.0.0.1 --port $(BACKEND_PORT)
 
-frontend:
-	cd "$(CURDIR)/frontend" && npm run dev
+frontend: $(FRONTEND_DIR)/node_modules/.bin/vite
+	cd "$(FRONTEND_DIR)" && npm run dev
 
 stop:
 	@for p in $(BACKEND_PORT) $(FRONTEND_PORT); do \
