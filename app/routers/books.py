@@ -10,10 +10,14 @@ from pydantic import BaseModel, Field, field_validator
 
 from app.deps import pipeline_locale
 from app.locale import AppLocale
-from app.services.demo_seed import ensure_demo_library_seeded
+from app.services.demo_seed import (
+    ensure_demo_library_seeded,
+    mark_library_emptied_by_user,
+)
 from app.services.library_db import (
     BookIdentityConflictError,
     delete_book,
+    get_all_books,
     get_book,
     import_books,
     list_books,
@@ -174,4 +178,6 @@ async def api_update_book(book_id: str, body: BookUpdate) -> dict[str, Any]:
 async def api_delete_book(book_id: str) -> dict[str, str]:
     if not delete_book(book_id):
         raise HTTPException(404, "Book not found")
+    if not get_all_books():
+        mark_library_emptied_by_user()
     return {"status": "deleted"}

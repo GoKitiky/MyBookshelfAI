@@ -10,7 +10,7 @@ from app.services.cache import CacheNamespace, make_key, set_cache
 from app.services.library_db import get_all_books, upsert_book
 from app.services.profile import ProfileBuilder
 from app.services.recommendation_scoring import apply_match_scores_to_recommendation_dicts
-from app.services.settings_db import set_setting
+from app.services.settings_db import get_setting, set_setting
 
 logger = logging.getLogger(__name__)
 
@@ -500,11 +500,21 @@ _DEMO_BY_LOCALE: dict[
 }
 
 SETTING_DEMO_LIBRARY = "demo_library"
+# When true, an empty library stays empty (user removed all books); do not re-seed demo.
+SETTING_DEMO_AUTO_SEED_SUPPRESSED = "demo_auto_seed_suppressed"
+
+
+def mark_library_emptied_by_user() -> None:
+    """Remember that the user cleared the library so demo content is not auto-restored."""
+    set_setting(SETTING_DEMO_AUTO_SEED_SUPPRESSED, "true")
+    set_setting(SETTING_DEMO_LIBRARY, "false")
 
 
 async def ensure_demo_library_seeded(locale: AppLocale) -> None:
-    """If the library is empty, seed demo content for the requested UI locale."""
+    """Seed demo once on first-ever empty library, not again after the user deleted all books."""
     if get_all_books():
+        return
+    if get_setting(SETTING_DEMO_AUTO_SEED_SUPPRESSED) == "true":
         return
     await seed_demo_library(locale)
 
