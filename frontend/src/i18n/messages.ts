@@ -146,6 +146,9 @@ export type Messages = {
     emptySubBefore: string;
     emptySubLink: string;
     emptySubAfter: string;
+    emptyLibraryTitle: string;
+    emptyLibraryHint: string;
+    emptyLibraryCta: string;
     summary: string;
     noSummary: string;
     topGenres: string;
@@ -331,6 +334,10 @@ const ru: Messages = {
     emptySubBefore: "Используется библиотека на вкладке",
     emptySubLink: "«Библиотека»",
     emptySubAfter: ". Нужно как минимум две книги.",
+    emptyLibraryTitle: "В библиотеке пока нет книг",
+    emptyLibraryHint:
+      "Профиль читателя собирается по книгам из библиотеки. Добавьте книги, затем снова откройте эту страницу.",
+    emptyLibraryCta: "Перейти в библиотеку",
     summary: "Кратко",
     noSummary: "Текста резюме нет.",
     topGenres: "Топ жанров",
@@ -516,6 +523,10 @@ const en: Messages = {
     emptySubBefore: "Uses your library on the",
     emptySubLink: "Library",
     emptySubAfter: "tab. You need at least two books.",
+    emptyLibraryTitle: "Your library has no books yet",
+    emptyLibraryHint:
+      "Your reader profile is built from the books in your library. Add some books, then open this page again.",
+    emptyLibraryCta: "Go to library",
     summary: "Summary",
     noSummary: "No summary text.",
     topGenres: "Top genres",
