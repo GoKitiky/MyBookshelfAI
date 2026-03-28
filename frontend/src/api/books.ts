@@ -4,6 +4,13 @@ import { withAppLocale } from "./pipelineHeaders";
 
 const BASE = "/api/books";
 
+/** Fired on `window` when library data should be refetched (e.g. after bulk demo clear). */
+export const LIBRARY_UPDATED_EVENT = "mybookshelf:library-updated";
+
+export function notifyLibraryUpdated(): void {
+  window.dispatchEvent(new Event(LIBRARY_UPDATED_EVENT));
+}
+
 async function request<T>(url: string, init?: RequestInit): Promise<T> {
   const res = await fetch(url, init);
   if (!res.ok) {
@@ -75,6 +82,14 @@ export function updateBook(
 
 export function deleteBook(id: string): Promise<{ status: string }> {
   return request<{ status: string }>(`${BASE}/${id}`, { method: "DELETE" });
+}
+
+/** Demo clear uses a dedicated app route (see ``app.main.api_clear_demo_library``). */
+export function clearDemoBooks(locale: Locale): Promise<{ removed: number }> {
+  return request<{ removed: number }>(
+    "/api/demo/clear-library",
+    withAppLocale(locale, { method: "POST" }),
+  );
 }
 
 export async function importBooks(files: FileList): Promise<SyncResult> {

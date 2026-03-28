@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { fetchBooks } from "../api/books";
+import { fetchBooks, LIBRARY_UPDATED_EVENT } from "../api/books";
 import type { Locale } from "../i18n/locale";
 import type { Book, BooksResponse, LibraryListSort } from "../types";
 
@@ -47,6 +47,12 @@ export function useBooks(
       cancelled = true;
     };
   }, [locale, page, perPage, sort, tick]);
+
+  useEffect(() => {
+    const onUpdate = () => setTick((t) => t + 1);
+    window.addEventListener(LIBRARY_UPDATED_EVENT, onUpdate);
+    return () => window.removeEventListener(LIBRARY_UPDATED_EVENT, onUpdate);
+  }, []);
 
   return {
     books: data?.books ?? [],

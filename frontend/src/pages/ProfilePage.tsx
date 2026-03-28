@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { fetchLibraryReadiness } from "../api/readiness";
 import { buildProfile, fetchProfile } from "../api/recommend";
 import { IndeterminateProgress } from "../components/IndeterminateProgress";
 import { useToast } from "../components/Toast";
@@ -32,6 +33,17 @@ function topNMoods(moods: string[], n: number): string[] {
   return u.slice(0, n);
 }
 
+/** True when GET /profile failed because the library has no books (readiness may be unavailable). */
+function isEmptyLibraryProfileError(msg: string): boolean {
+  if (!msg.startsWith("400")) return false;
+  const lower = msg.toLowerCase();
+  return (
+    lower.includes("no books in library") ||
+    lower.includes("library is empty") ||
+    lower.includes("import .md files first")
+  );
+}
+
 export function ProfilePage() {
   const { toast } = useToast();
   const { m, locale } = useI18n();
@@ -41,17 +53,32 @@ export function ProfilePage() {
   const [loading, setLoading] = useState(true);
   const [building, setBuilding] = useState(false);
   const [missing, setMissing] = useState(false);
+  const [noBooks, setNoBooks] = useState(false);
   const { runPrepare, preparing, phase } = useLibraryPrepare(locale);
 
   const load = useCallback(async () => {
     setLoading(true);
     setMissing(false);
+    setNoBooks(false);
     try {
+      try {
+        const readiness = await fetchLibraryReadiness(locale);
+        if (readiness.book_count === 0) {
+          setProfile(null);
+          setNoBooks(true);
+          return;
+        }
+      } catch {
+        // If readiness fails, still try loading the profile.
+      }
       const p = await fetchProfile(locale);
       setProfile(p);
     } catch (e) {
       const msg = e instanceof Error ? e.message : String(e);
-      if (msg.startsWith("404")) {
+      if (isEmptyLibraryProfileError(msg)) {
+        setProfile(null);
+        setNoBooks(true);
+      } else if (msg.startsWith("404")) {
         setProfile(null);
         setMissing(true);
       } else {
@@ -87,6 +114,7 @@ export function ProfilePage() {
       const p = await buildProfile(locale, true);
       setProfile(p);
       setMissing(false);
+      setNoBooks(false);
       toast(m.profile.rebuilt);
     } catch (e) {
       toast(
@@ -149,7 +177,17 @@ export function ProfilePage() {
         </div>
       ) : null}
 
-      {missing && !loading ? (
+      {noBooks && !loading ? (
+        <div className="profile-empty">
+          <p className="profile-empty-title">{m.profile.emptyLibraryTitle}</p>
+          <p className="profile-empty-sub">{m.profile.emptyLibraryHint}</p>
+          <Link className="btn btn-primary" to="/">
+            {m.profile.emptyLibraryCta}
+          </Link>
+        </div>
+      ) : null}
+
+      {missing && !loading && !noBooks ? (
         <div className="profile-empty">
           <p className="profile-empty-title">{m.profile.emptyTitle}</p>
           <button

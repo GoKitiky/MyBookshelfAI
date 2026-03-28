@@ -107,8 +107,9 @@ export type Messages = {
     load: string;
     wait: string;
     refresh: string;
-    blockedEmpty: string;
-    syncLibrary: string;
+    emptyLibraryTitle: string;
+    emptyLibraryHint: string;
+    emptyLibraryCta: string;
     blockedMoreBooks: string;
     openLibrary: string;
     blockedEnrich: string;
@@ -146,6 +147,9 @@ export type Messages = {
     emptySubBefore: string;
     emptySubLink: string;
     emptySubAfter: string;
+    emptyLibraryTitle: string;
+    emptyLibraryHint: string;
+    emptyLibraryCta: string;
     summary: string;
     noSummary: string;
     topGenres: string;
@@ -173,6 +177,14 @@ export type Messages = {
     saveFailed: (msg: string) => string;
     showKey: string;
     hideKey: string;
+  };
+  demoFab: {
+    label: string;
+    aria: string;
+    clearing: string;
+    confirm: string;
+    success: string;
+    failed: string;
   };
 };
 
@@ -278,8 +290,10 @@ const ru: Messages = {
     load: "Загрузить",
     wait: "Подождите…",
     refresh: "Обновить",
-    blockedEmpty: "Здесь пока пустая библиотека.",
-    syncLibrary: "Синхронизировать библиотеку",
+    emptyLibraryTitle: "В библиотеке пока нет книг",
+    emptyLibraryHint:
+      "Персональные рекомендации строятся по книгам из вашей библиотеки. Добавьте книги, затем снова откройте эту страницу.",
+    emptyLibraryCta: "Перейти в библиотеку",
     blockedMoreBooks:
       "Добавьте ещё одну книгу и снова синхронизируйте.",
     openLibrary: "Открыть библиотеку",
@@ -309,7 +323,8 @@ const ru: Messages = {
       "Договариваемся с музами и метаданными…",
     ],
     errorShort: {
-      need_sync: "Сначала синхронизируйте библиотеку.",
+      need_sync:
+        "В библиотеке пока нет книг. Добавьте книги, чтобы получить рекомендации.",
       need_books: "В библиотеке нужно как минимум две книги.",
       need_enrich: "Сначала выполните быстрый анализ библиотеки.",
       other: "Не удалось загрузить рекомендации.",
@@ -331,6 +346,10 @@ const ru: Messages = {
     emptySubBefore: "Используется библиотека на вкладке",
     emptySubLink: "«Библиотека»",
     emptySubAfter: ". Нужно как минимум две книги.",
+    emptyLibraryTitle: "В библиотеке пока нет книг",
+    emptyLibraryHint:
+      "Профиль читателя собирается по книгам из библиотеки. Добавьте книги, затем снова откройте эту страницу.",
+    emptyLibraryCta: "Перейти в библиотеку",
     summary: "Кратко",
     noSummary: "Текста резюме нет.",
     topGenres: "Топ жанров",
@@ -359,6 +378,15 @@ const ru: Messages = {
     saveFailed: (msg) => `Не удалось сохранить: ${msg}`,
     showKey: "Показать ключ",
     hideKey: "Скрыть ключ",
+  },
+  demoFab: {
+    label: "Убрать демо-книги",
+    aria: "Удалить все демонстрационные книги из библиотеки",
+    clearing: "Удаление…",
+    confirm:
+      "Удалить все демо-книги из библиотеки? Пустая библиотека не заполнится демо снова автоматически.",
+    success: "Демо-книги удалены",
+    failed: "Не удалось удалить демо-книги",
   },
 };
 
@@ -464,8 +492,10 @@ const en: Messages = {
     load: "Load",
     wait: "Working…",
     refresh: "Refresh",
-    blockedEmpty: "Your library is empty here.",
-    syncLibrary: "Sync library",
+    emptyLibraryTitle: "Your library has no books yet",
+    emptyLibraryHint:
+      "Personal recommendations are based on the books in your library. Add some books, then open this page again.",
+    emptyLibraryCta: "Go to library",
     blockedMoreBooks: "Add one more book, then sync again.",
     openLibrary: "Open library",
     blockedEnrich:
@@ -494,7 +524,8 @@ const en: Messages = {
       "Negotiating with muses and metadata…",
     ],
     errorShort: {
-      need_sync: "Sync your library first.",
+      need_sync:
+        "Your library has no books yet. Add books to get recommendations.",
       need_books: "You need at least two books in your library.",
       need_enrich: "Run a quick analysis on your library.",
       other: "Could not load recommendations.",
@@ -516,6 +547,10 @@ const en: Messages = {
     emptySubBefore: "Uses your library on the",
     emptySubLink: "Library",
     emptySubAfter: "tab. You need at least two books.",
+    emptyLibraryTitle: "Your library has no books yet",
+    emptyLibraryHint:
+      "Your reader profile is built from the books in your library. Add some books, then open this page again.",
+    emptyLibraryCta: "Go to library",
     summary: "Summary",
     noSummary: "No summary text.",
     topGenres: "Top genres",
@@ -544,6 +579,15 @@ const en: Messages = {
     saveFailed: (msg) => `Save failed: ${msg}`,
     showKey: "Show key",
     hideKey: "Hide key",
+  },
+  demoFab: {
+    label: "Remove demo books",
+    aria: "Remove all demonstration books from the library",
+    clearing: "Removing…",
+    confirm:
+      "Remove all demo books from your library? An empty library will not be auto-filled with demo again.",
+    success: "Demo books removed",
+    failed: "Could not remove demo books",
   },
 };
 

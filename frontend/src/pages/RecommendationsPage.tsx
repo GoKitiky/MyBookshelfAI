@@ -283,9 +283,10 @@ export function RecommendationsPage() {
         <div className="rec-blocked">
           {readiness.needs_sync || readiness.book_count === 0 ? (
             <>
-              <p className="rec-blocked-msg">{m.rec.blockedEmpty}</p>
+              <p className="rec-blocked-title">{m.rec.emptyLibraryTitle}</p>
+              <p className="rec-blocked-hint">{m.rec.emptyLibraryHint}</p>
               <Link className="btn btn-primary" to="/">
-                {m.rec.syncLibrary}
+                {m.rec.emptyLibraryCta}
               </Link>
             </>
           ) : null}
@@ -344,7 +345,7 @@ export function RecommendationsPage() {
           errorBlocker?.kind === "need_books" ? (
             <Link className="btn btn-primary rec-error-cta" to="/">
               {errorBlocker.kind === "need_sync"
-                ? m.rec.syncLibrary
+                ? m.rec.emptyLibraryCta
                 : m.rec.openLibrary}
             </Link>
           ) : null}
