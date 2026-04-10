@@ -3,6 +3,7 @@
 [![CI](https://github.com/GoKitiky/MyBookshelfAI/actions/workflows/ci.yml/badge.svg)](https://github.com/GoKitiky/MyBookshelfAI/actions/workflows/ci.yml)
 
 **AI-powered personal book recommender. Bring your own API key.**
+
 **Stop guessing your next read. Use your own notes to get recommendations that actually fit your taste.**
 
 MyBookshelfAI turns scattered Markdown book notes into a personal reading brain: clean library, AI enrichment, reader profile, and ranked recommendations.
