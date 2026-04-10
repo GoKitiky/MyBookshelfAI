@@ -14,7 +14,6 @@ ROOT_DIR = Path(__file__).resolve().parent.parent
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
-from app.main import app
 from app.services.runtime_paths import DATA_DIR_ENV
 
 DEFAULT_HOST = "127.0.0.1"
@@ -36,6 +35,7 @@ def main() -> None:
     args = parse_args()
     if args.data_dir is not None:
         os.environ[DATA_DIR_ENV] = str(args.data_dir.expanduser())
+    from app.main import app
 
     config = uvicorn.Config(
         app,
