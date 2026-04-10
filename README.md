@@ -3,12 +3,25 @@
 [![CI](https://github.com/GoKitiky/MyBookshelfAI/actions/workflows/ci.yml/badge.svg)](https://github.com/GoKitiky/MyBookshelfAI/actions/workflows/ci.yml)
 
 **AI-powered personal book recommender. Bring your own API key.**
+**Stop guessing your next read. Use your own notes to get recommendations that actually fit your taste.**
 
-Import your reading notes as Markdown files, get AI-powered enrichment (genres, themes, mood, complexity), a reader profile built from your library, and personalized book recommendations.
+MyBookshelfAI turns scattered Markdown book notes into a personal reading brain: clean library, AI enrichment, reader profile, and ranked recommendations.
 
-**Why this project:** keep notes and taste in one place, run everything locally (or in Docker), and plug in any OpenAI-compatible API—no vendor lock-in for how you host the app.
+## The pain it solves
 
-**Limits:** you need your own LLM API key for enrichment and recommendations; data stays on your machine (SQLite). This is not a hosted SaaS.
+- **"I have notes everywhere, but no system."**  
+  Import your `.md` files and get one searchable library.
+- **"Most recommendation apps feel random."**  
+  Suggestions are based on *your* reading profile, not generic trends. AI extracts genres, themes, mood, and complexity from each note.
+- **"I do not want platform lock-in."**  
+  Bring your own API key, keep data local in SQLite, run locally or in Docker.
+
+## Download Linux Desktop (fast)
+
+- **Latest Linux builds:** [Open Downloads Page](https://github.com/GoKitiky/MyBookshelfAI/releases/latest)
+- **Formats planned for quick install:** AppImage and `.deb`
+
+**Limits:** you need your own LLM API key for enrichment and recommendations. Data stays on your machine (SQLite). This is not a hosted SaaS.
 
 ## Screenshots
 
