@@ -5,7 +5,7 @@ FRONTEND_PORT ?= 5173
 PYTHON ?= python3
 FRONTEND_DIR := $(CURDIR)/frontend
 
-.PHONY: help dev website backend frontend stop
+.PHONY: help dev website backend frontend stop desktop-dev desktop-build
 
 # Install JS deps when missing or after package-lock.json changes.
 $(FRONTEND_DIR)/node_modules/.bin/vite: $(FRONTEND_DIR)/package-lock.json
@@ -18,6 +18,8 @@ help:
 	@echo "  make backend   – API only"
 	@echo "  make frontend  – Vite only"
 	@echo "  make stop      – kill anything listening on those ports"
+	@echo "  make desktop-dev   – Linux desktop app dev mode (Tauri)"
+	@echo "  make desktop-build – Linux desktop build (Tauri)"
 	@echo "Override Python: make PYTHON=.venv/bin/python dev"
 
 # Run both servers in one shell so INT/TERM kills all background jobs and frees ports.
@@ -35,6 +37,12 @@ backend:
 
 frontend: $(FRONTEND_DIR)/node_modules/.bin/vite
 	cd "$(FRONTEND_DIR)" && npm run dev
+
+desktop-dev: $(FRONTEND_DIR)/node_modules/.bin/vite
+	cd "$(FRONTEND_DIR)" && npm run desktop:dev
+
+desktop-build: $(FRONTEND_DIR)/node_modules/.bin/vite
+	cd "$(FRONTEND_DIR)" && npm run desktop:build
 
 stop:
 	@for p in $(BACKEND_PORT) $(FRONTEND_PORT); do \

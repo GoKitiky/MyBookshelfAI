@@ -180,8 +180,8 @@
 /* ===== Book grid ===== */
 .book-grid {
   display: grid;
-  /* ~7 columns fit in 1200px main column with 20px horizontal padding */
-  grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+  /* Slightly wider cells to reduce title/author truncation */
+  grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
   gap: 12px;
 }
 

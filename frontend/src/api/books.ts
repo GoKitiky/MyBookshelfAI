@@ -1,5 +1,6 @@
 import type { Locale } from "../i18n/locale";
 import type { Book, BooksResponse, LibraryListSort, SyncResult } from "../types";
+import { apiUrl } from "./baseUrl";
 import { withAppLocale } from "./pipelineHeaders";
 
 const BASE = "/api/books";
@@ -12,7 +13,7 @@ export function notifyLibraryUpdated(): void {
 }
 
 async function request<T>(url: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(url, init);
+  const res = await fetch(apiUrl(url), init);
   if (!res.ok) {
     const body = await res.text();
     throw new Error(`${res.status}: ${body}`);
@@ -97,7 +98,7 @@ export async function importBooks(files: FileList): Promise<SyncResult> {
   for (const file of files) {
     form.append("files", file);
   }
-  const res = await fetch(`${BASE}/import`, { method: "POST", body: form });
+  const res = await fetch(apiUrl(`${BASE}/import`), { method: "POST", body: form });
   if (!res.ok) {
     const body = await res.text();
     throw new Error(`${res.status}: ${body}`);

@@ -1,14 +1,19 @@
 {
   "name": "mybookshelfai-frontend",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "tauri": "tauri",
+    "desktop:sidecar": "python3 ../desktop/build_backend_sidecar.py --clean",
+    "desktop:dev": "sh ./run-tauri-with-rust.sh dev",
+    "desktop:build": "sh ./run-tauri-with-rust.sh build"
   },
   "dependencies": {
+    "@tauri-apps/api": "^2.10.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-markdown": "^9.0.0",
@@ -17,6 +22,7 @@
     "remark-gfm": "^4.0.0"
   },
   "devDependencies": {
+    "@tauri-apps/cli": "^2.10.1",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^4.3.0",

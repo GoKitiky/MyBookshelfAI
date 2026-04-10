@@ -4,9 +4,10 @@ from __future__ import annotations
 
 import sqlite3
 from datetime import datetime, timezone
-from pathlib import Path
 
-DB_PATH = Path("data/cache.db")
+from app.services.runtime_paths import get_cache_db_path
+
+DB_PATH = get_cache_db_path()
 
 SETTING_LLM_API_KEY = "llm_api_key"
 SETTING_LLM_BASE_URL = "llm_base_url"

@@ -208,3 +208,5 @@ node_modules/
 data/
 *.db
 backups/
+/frontend/src-tauri/binaries/*
+!/frontend/src-tauri/binaries/.gitkeep

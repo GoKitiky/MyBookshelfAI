@@ -4,6 +4,7 @@ import type {
   ReaderProfile,
   RecommendationsResponse,
 } from "../types";
+import { apiUrl } from "./baseUrl";
 import { withAppLocale } from "./pipelineHeaders";
 
 const PIPELINE = "/api/pipeline";
@@ -13,7 +14,7 @@ async function request<T>(
   url: string,
   init?: RequestInit,
 ): Promise<T> {
-  const res = await fetch(url, withAppLocale(locale, init));
+  const res = await fetch(apiUrl(url), withAppLocale(locale, init));
   if (!res.ok) {
     const body = await res.text();
     throw new Error(`${res.status}: ${body}`);

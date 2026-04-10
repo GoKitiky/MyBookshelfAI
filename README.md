@@ -3,12 +3,25 @@
 [![CI](https://github.com/GoKitiky/MyBookshelfAI/actions/workflows/ci.yml/badge.svg)](https://github.com/GoKitiky/MyBookshelfAI/actions/workflows/ci.yml)
 
 **AI-powered personal book recommender. Bring your own API key.**
+**Stop guessing your next read. Use your own notes to get recommendations that actually fit your taste.**
 
-Import your reading notes as Markdown files, get AI-powered enrichment (genres, themes, mood, complexity), a reader profile built from your library, and personalized book recommendations.
+MyBookshelfAI turns scattered Markdown book notes into a personal reading brain: clean library, AI enrichment, reader profile, and ranked recommendations.
 
-**Why this project:** keep notes and taste in one place, run everything locally (or in Docker), and plug in any OpenAI-compatible API—no vendor lock-in for how you host the app.
+## The pain it solves
 
-**Limits:** you need your own LLM API key for enrichment and recommendations; data stays on your machine (SQLite). This is not a hosted SaaS.
+- **"I have notes everywhere, but no system."**  
+  Import your `.md` files and get one searchable library.
+- **"Most recommendation apps feel random."**  
+  Suggestions are based on *your* reading profile, not generic trends. AI extracts genres, themes, mood, and complexity from each note.
+- **"I do not want platform lock-in."**  
+  Bring your own API key, keep data local in SQLite, run locally or in Docker.
+
+## Download Linux Desktop (fast)
+
+- **Latest Linux builds:** [Open Downloads Page](https://github.com/GoKitiky/MyBookshelfAI/releases/latest)
+- **Formats planned for quick install:** AppImage and `.deb`
+
+**Limits:** you need your own LLM API key for enrichment and recommendations. Data stays on your machine (SQLite). This is not a hosted SaaS.
 
 ## Screenshots
 
@@ -91,6 +104,37 @@ Then open <http://localhost:5173>:
 1. Go to **Settings** and enter your API key (and base URL / model names if not using OpenAI directly).
 2. **Import** your `.md` book notes.
 3. **Enrich** → **Build profile** → **Get recommendations**.
+
+### Linux desktop (Tauri)
+
+This repo also supports a Linux desktop build where the backend is started
+automatically as a Tauri sidecar (no separate `uvicorn` command).
+
+Prerequisites:
+
+- Rust toolchain (`rustup`, `cargo`)
+- Linux Tauri system dependencies (WebKitGTK, GTK3, libayatana-appindicator)
+  - Ubuntu/Debian example: `sudo apt install -y libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev patchelf`
+- PyInstaller for the backend sidecar build (`pip install pyinstaller`)
+
+Desktop dev/build commands:
+
+```bash
+cd frontend
+npm ci
+npm run desktop:dev
+# or: npm run desktop:build
+```
+
+Equivalent Make targets from repo root:
+
+```bash
+make desktop-dev
+# or: make desktop-build
+```
+
+Desktop runtime data is stored in the app data directory resolved by Tauri.
+You can override it with `MYBOOKSHELFAI_DATA_DIR` when needed.
 
 ## Markdown File Format
 

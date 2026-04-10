@@ -5,10 +5,11 @@ import json
 import sqlite3
 from datetime import datetime, timedelta
 from enum import Enum
-from pathlib import Path
 from typing import Any
 
-DB_PATH = Path("data/cache.db")
+from app.services.runtime_paths import get_cache_db_path
+
+DB_PATH = get_cache_db_path()
 
 # Default TTLs per namespace (hours)
 _DEFAULT_TTL: dict[str, int] = {
