@@ -14,7 +14,7 @@ struct BackendState {
 fn stop_backend(app: &AppHandle) {
   if let Some(state) = app.try_state::<BackendState>() {
     if let Ok(mut guard) = state.child.lock() {
-      if let Some(mut child) = guard.take() {
+      if let Some(child) = guard.take() {
         let _ = child.kill();
       }
     }
@@ -40,7 +40,7 @@ pub fn run() {
       let data_dir_arg = app_data_dir.to_string_lossy().into_owned();
 
       let sidecar = app.shell().sidecar(BACKEND_SIDECAR_NAME)?;
-      let args = [
+      let args = vec![
         "--host".to_string(),
         BACKEND_HOST.to_string(),
         "--port".to_string(),
