@@ -7,14 +7,14 @@ import json
 import sqlite3
 from collections.abc import Sequence
 from datetime import datetime, timezone
-from pathlib import Path
 from typing import Any, Literal
 
 from app.models import Book
+from app.services.runtime_paths import get_cache_db_path
 
 ReadingListKind = Literal["planned", "blacklist"]
 
-DB_PATH = Path("data/cache.db")
+DB_PATH = get_cache_db_path()
 
 
 class BookIdentityConflictError(Exception):

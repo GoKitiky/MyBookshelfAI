@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import logging
 from contextlib import asynccontextmanager
-from pathlib import Path
 from typing import AsyncIterator
 
 from fastapi import Depends, FastAPI, HTTPException
@@ -18,6 +17,7 @@ from app.routers import settings as settings_router
 from app.services.cache import init_cache
 from app.services.demo_seed import clear_demo_books
 from app.services.library_db import init_books_table, init_reading_lists_table
+from app.services.runtime_paths import ensure_data_dir
 from app.services.settings_db import init_settings_table, seed_from_env
 
 logging.basicConfig(
@@ -28,7 +28,7 @@ logging.basicConfig(
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI) -> AsyncIterator[None]:
-    Path("data").mkdir(exist_ok=True)
+    ensure_data_dir()
     init_cache()
     init_books_table()
     init_reading_lists_table()
@@ -46,7 +46,10 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origin_regex=r"^https?://(localhost|127\.0\.0\.1)(:\d+)?$",
+    allow_origin_regex=(
+        r"^(https?://(localhost|127\.0\.0\.1)(:\d+)?|"
+        r"(tauri|app)://localhost|https?://tauri\.localhost)$"
+    ),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

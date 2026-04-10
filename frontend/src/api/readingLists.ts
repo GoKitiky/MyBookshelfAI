@@ -1,9 +1,10 @@
 import type { ReadingListsResponse, ReadingListToggleResult } from "../types";
+import { apiUrl } from "./baseUrl";
 
 const BASE = "/api/reading-lists";
 
 async function request<T>(url: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(url, init);
+  const res = await fetch(apiUrl(url), init);
   if (!res.ok) {
     const body = await res.text();
     throw new Error(`${res.status}: ${body}`);

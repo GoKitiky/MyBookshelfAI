@@ -92,6 +92,37 @@ Then open <http://localhost:5173>:
 2. **Import** your `.md` book notes.
 3. **Enrich** → **Build profile** → **Get recommendations**.
 
+### Linux desktop (Tauri)
+
+This repo also supports a Linux desktop build where the backend is started
+automatically as a Tauri sidecar (no separate `uvicorn` command).
+
+Prerequisites:
+
+- Rust toolchain (`rustup`, `cargo`)
+- Linux Tauri system dependencies (WebKitGTK, GTK3, libayatana-appindicator)
+  - Ubuntu/Debian example: `sudo apt install -y libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev patchelf`
+- PyInstaller for the backend sidecar build (`pip install pyinstaller`)
+
+Desktop dev/build commands:
+
+```bash
+cd frontend
+npm ci
+npm run desktop:dev
+# or: npm run desktop:build
+```
+
+Equivalent Make targets from repo root:
+
+```bash
+make desktop-dev
+# or: make desktop-build
+```
+
+Desktop runtime data is stored in the app data directory resolved by Tauri.
+You can override it with `MYBOOKSHELFAI_DATA_DIR` when needed.
+
 ## Markdown File Format
 
 Each book is one `.md` file. Title and author are extracted from the filename:

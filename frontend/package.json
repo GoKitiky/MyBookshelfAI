@@ -6,9 +6,14 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "tauri": "tauri",
+    "desktop:sidecar": "python3 ../desktop/build_backend_sidecar.py --clean",
+    "desktop:dev": "npm run desktop:sidecar && tauri dev",
+    "desktop:build": "npm run desktop:sidecar && tauri build"
   },
   "dependencies": {
+    "@tauri-apps/api": "^2.10.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-markdown": "^9.0.0",
@@ -17,6 +22,7 @@
     "remark-gfm": "^4.0.0"
   },
   "devDependencies": {
+    "@tauri-apps/cli": "^2.10.1",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^4.3.0",
