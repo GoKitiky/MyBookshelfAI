@@ -9,8 +9,8 @@
     "preview": "vite preview",
     "tauri": "tauri",
     "desktop:sidecar": "python3 ../desktop/build_backend_sidecar.py --clean",
-    "desktop:dev": "npm run desktop:sidecar && tauri dev",
-    "desktop:build": "npm run desktop:sidecar && tauri build"
+    "desktop:dev": "sh ./run-tauri-with-rust.sh dev",
+    "desktop:build": "sh ./run-tauri-with-rust.sh build"
   },
   "dependencies": {
     "@tauri-apps/api": "^2.10.1",
